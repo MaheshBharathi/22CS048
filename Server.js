@@ -1,50 +1,10 @@
-// // backend/server.js
-// const express = require('express');
-// const cors = require('cors');
-// const bodyParser = require('body-parser');
-
-// const app = express();
-// const PORT = 5000;
-
-// // Middleware
-// app.use(cors());
-// app.use(bodyParser.json());
-
-// // Route to calculate average
-// app.post('/average', (req, res) => {
-//   const { numbers } = req.body;
-
-//   if (!Array.isArray(numbers) || numbers.length === 0) {
-//     return res.status(400).json({ error: 'Invalid input. Please provide an array of numbers.' });
-//   }
-
-//   const validNumbers = numbers.filter(num => typeof num === 'number' && !isNaN(num));
-
-//   if (validNumbers.length !== numbers.length) {
-//     return res.status(400).json({ error: 'All elements must be valid numbers.' });
-//   }
-
-//   const sum = validNumbers.reduce((acc, val) => acc + val, 0);
-//   const average = sum / validNumbers.length;
-
-//   res.json({ average });
-// });
-
-// // Start the server
-// app.listen(PORT, () => {
-//   console.log(`🚀 Server is running at http://localhost:${PORT}`);
-// });
-
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-
 const app = express();
 const PORT = 5000;
-
 app.use(cors());
 app.use(bodyParser.json());
-
 function isPrime(num) {
   if (num < 2) return false;
   for (let i = 2; i <= Math.sqrt(num); i++) {
@@ -52,7 +12,6 @@ function isPrime(num) {
   }
   return true;
 }
-
 function generatePrimes(count) {
   const primes = [];
   let num = 2;
@@ -62,7 +21,6 @@ function generatePrimes(count) {
   }
   return primes;
 }
-
 function generateFibonacci(count) {
   const fib = [0, 1];
   while (fib.length < count) {
@@ -70,7 +28,6 @@ function generateFibonacci(count) {
   }
   return fib.slice(0, count);
 }
-
 function generateEven(count) {
   const evens = [];
   for (let i = 0; evens.length < count; i += 2) {
@@ -78,7 +35,6 @@ function generateEven(count) {
   }
   return evens;
 }
-
 function generateRandom(count) {
   const arr = [];
   for (let i = 0; i < count; i++) {
@@ -86,17 +42,14 @@ function generateRandom(count) {
   }
   return arr;
 }
-
 app.post('/numbers', (req, res) => {
   const { type, count } = req.body;
 
   if (!['prime', 'fibonacci', 'even', 'random'].includes(type)) {
     return res.status(400).json({ error: 'Invalid type specified.' });
   }
-
   const numberCount = parseInt(count) || 5;
   let result;
-
   switch (type) {
     case 'prime':
       result = generatePrimes(numberCount);
@@ -111,10 +64,8 @@ app.post('/numbers', (req, res) => {
       result = generateRandom(numberCount);
       break;
   }
-
   res.json({ result });
 });
-
 app.listen(PORT, () => {
-  console.log(`🚀 Server running at http://localhost:${PORT}`);
+  console.log(` Server running at http://localhost:${PORT}`);
 });
